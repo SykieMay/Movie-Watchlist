@@ -2,6 +2,7 @@ import Layout from "./layouts/Layout";
 import MovieList from "./components/MovieList";
 import moviesData from "./data/movies";
 import { useState } from "react";
+import AddMovieForm from "./components/AddMovieForm";
 
 export default function App() {
   const [movies, setMovies] = useState(moviesData);
@@ -20,6 +21,11 @@ export default function App() {
     setMovies(movies.filter((movie) => movie.id !== id));
   };
 
+  const handleAddMovie = (newMovie) => {
+    setMovies([...movies, newMovie]);
+  };
+
+
 
   return (
     <Layout>
@@ -29,6 +35,8 @@ export default function App() {
           A collection of movies I've watched and want to watch.
         </p>
       </div>
+
+      <AddMovieForm onAddMovie={handleAddMovie} />
 
       <MovieList
         movies={movies}
