@@ -4,6 +4,7 @@ import moviesData from "./data/movies";
 import { useState } from "react";
 import AddMovieForm from "./components/AddMovieForm";
 import FilterBar from "./components/FilterBar";
+import SummaryBar from "./components/SummaryBar";
 
 export default function App() {
   const [movies, setMovies] = useState(moviesData);
@@ -43,6 +44,7 @@ export default function App() {
         </p>
       </div>
 
+      <SummaryBar movies={movies}/>
       <AddMovieForm onAddMovie={handleAddMovie} />
 
       <FilterBar
