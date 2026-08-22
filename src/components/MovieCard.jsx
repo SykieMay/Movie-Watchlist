@@ -7,6 +7,7 @@ export default function MovieCard({
   rating,
   watched,
   onToggleWatched,
+  onDelete
 }) {
   return (
     <div className="card bg-base-100 shadow-xl">
@@ -37,6 +38,12 @@ export default function MovieCard({
             className={`btn btn-sm ${watched ? "btn-success" : "btn-ghost"}`}
           >
             {watched ? "Watched ✓" : "Unwatched"}
+          </button>
+          <button
+            onClick={() => onDelete(id)}
+            className="btn btn-sm btn-error"
+          >
+            🗑️ Delete
           </button>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import MovieCard from "./MovieCard";
 
-export default function MovieList({ movies, onToggleWatched }) {
+export default function MovieList({ movies, onToggleWatched, onDelete }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {movies.map((movie) => (
@@ -14,6 +14,7 @@ export default function MovieList({ movies, onToggleWatched }) {
           rating={movie.rating}
           watched={movie.watched}
           onToggleWatched={onToggleWatched}
+          onDelete={onDelete}
         />
       ))}
     </div>
