@@ -1,5 +1,13 @@
-export default function MovieCard({ title, poster, year, genre, rating, watched }) {
-
+export default function MovieCard({
+  id,
+  title,
+  poster,
+  year,
+  genre,
+  rating,
+  watched,
+  onToggleWatched,
+}) {
   return (
     <div className="card bg-base-100 shadow-xl">
       <figure>
@@ -23,11 +31,13 @@ export default function MovieCard({ title, poster, year, genre, rating, watched 
           ⭐ {rating}
         </p>
         <div className="card-actions justify-end mt-2">
-          {watched ? (
-            <div className="badge badge-success">Watched ✓</div>
-          ) : (
-            <div className="badge badge-ghost">Unwatched</div>
-          )}
+          <button
+            type="button"
+            onClick={() => onToggleWatched(id)}
+            className={`btn btn-sm ${watched ? "btn-success" : "btn-ghost"}`}
+          >
+            {watched ? "Watched ✓" : "Unwatched"}
+          </button>
         </div>
       </div>
     </div>
