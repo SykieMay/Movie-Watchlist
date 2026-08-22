@@ -1,8 +1,10 @@
 import Layout from "./layouts/Layout";
 import MovieList from "./components/MovieList";
-import movies from "./data/movies";
+import moviesData from "./data/movies";
+import { useState } from "react";
 
 export default function App() {
+  const [movies, setMovies] = useState(moviesData);
   return (
     <Layout>
       <div className="mb-6">
