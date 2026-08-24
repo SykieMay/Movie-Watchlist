@@ -36,6 +36,11 @@ export default function App() {
     localStorage.setItem("movies", JSON.stringify(movies));
   }, [movies]);
 
+  useEffect(() => {
+ document.title = `Movie Watchlist (${movies.length})`;
+}, [movies.length]);
+
+
   const visibleMovies = movies.filter((movie) => {
     if (filter === "watched") return movie.watched;
     if (filter === "unwatched") return !movie.watched;
