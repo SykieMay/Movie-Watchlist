@@ -34,6 +34,12 @@ export default function App() {
     return localStorage.getItem("filter") || "all";
   });
 
+  const handleClearAll = () => {
+    if (confirm("Clear your entire watchlist? This cannot be undone.")) {
+      setMovies([]);
+    }
+  };
+
   useEffect(() => {
     localStorage.setItem("movies", JSON.stringify(movies));
   }, [movies]);
@@ -65,6 +71,11 @@ export default function App() {
       </div>
 
       <SummaryBar movies={movies}/>
+
+      <button className="btn btn-error btn-sm" onClick={handleClearAll}>
+        Clear All
+      </button>
+
       <AddMovieForm onAddMovie={handleAddMovie} />
 
       <FilterBar
