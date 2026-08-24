@@ -30,15 +30,21 @@ export default function App() {
     setMovies([...movies, newMovie]);
   };
 
-  const [filter, setFilter] = useState("all"); // "all" | "watched" | "unwatched"
+  const [filter, setFilter] = useState(() => {
+    return localStorage.getItem("filter") || "all";
+  });
 
   useEffect(() => {
     localStorage.setItem("movies", JSON.stringify(movies));
   }, [movies]);
 
   useEffect(() => {
- document.title = `Movie Watchlist (${movies.length})`;
-}, [movies.length]);
+    document.title = `Movie Watchlist (${movies.length})`;
+  }, [movies.length]);
+
+  useEffect(() => {
+    localStorage.setItem("filter", filter);
+  }, [filter]);
 
 
   const visibleMovies = movies.filter((movie) => {
