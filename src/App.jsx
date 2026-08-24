@@ -1,13 +1,16 @@
 import Layout from "./layouts/Layout";
 import MovieList from "./components/MovieList";
 import moviesData from "./data/movies";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddMovieForm from "./components/AddMovieForm";
 import FilterBar from "./components/FilterBar";
 import SummaryBar from "./components/SummaryBar";
 
 export default function App() {
-  const [movies, setMovies] = useState(moviesData);
+  const [movies, setMovies] = useState(() => {
+    const saved = localStorage.getItem("movies");
+    return saved ? JSON.parse(saved) : moviesData;
+  });
 
   const handleToggleWatched = (id) => {
     setMovies((currentMovies) =>
@@ -28,11 +31,17 @@ export default function App() {
   };
 
   const [filter, setFilter] = useState("all"); // "all" | "watched" | "unwatched"
+
+  useEffect(() => {
+    localStorage.setItem("movies", JSON.stringify(movies));
+  }, [movies]);
+
   const visibleMovies = movies.filter((movie) => {
     if (filter === "watched") return movie.watched;
     if (filter === "unwatched") return !movie.watched;
     return true;
 });
+
 
 
   return (
