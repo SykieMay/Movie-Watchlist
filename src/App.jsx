@@ -5,6 +5,10 @@ import { useState, useEffect } from "react";
 import AddMovieForm from "./components/AddMovieForm";
 import FilterBar from "./components/FilterBar";
 import SummaryBar from "./components/SummaryBar";
+import { searchMovies, toWatchlistMovie } from "./api/tmdb";
+import SearchBar from "./components/SearchBar";
+import SearchResults from "./components/SearchResults";
+
 
 export default function App() {
   const [movies, setMovies] = useState(() => {
@@ -40,6 +44,20 @@ export default function App() {
     }
   };
 
+  const handleAddFromSearch = (tmdbMovie) => {
+    // Avoid adding duplicate movies
+    if (movies.some((movie) => movie.id === tmdbMovie.id)) {
+      return;
+    }
+
+    // Transform the TMDB movie into your watchlist format
+    const watchlistMovie = toWatchlistMovie(tmdbMovie);
+
+    // Add the movie to the watchlist
+    setMovies([...movies, watchlistMovie]);
+  };
+
+
   useEffect(() => {
     localStorage.setItem("movies", JSON.stringify(movies));
   }, [movies]);
@@ -57,7 +75,48 @@ export default function App() {
     if (filter === "watched") return movie.watched;
     if (filter === "unwatched") return !movie.watched;
     return true;
-});
+  });
+
+
+  const [results, setResults] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Don't fetch when the search term is empty
+    if (!searchTerm) return;
+
+    let isCancelled = false;
+
+    const fetchResults = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const movies = await searchMovies(searchTerm);
+
+        if (!isCancelled) {
+          setResults(movies);
+        }
+      } catch (err) {
+        if (!isCancelled) {
+          setError("Failed to fetch movies. Try again.");
+        }
+      } finally {
+        if (!isCancelled) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchResults();
+
+    // Ignore stale response if the user searches again
+    return () => {
+      isCancelled = true;
+    };
+  }, [searchTerm]);
 
 
 
