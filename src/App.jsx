@@ -129,6 +129,15 @@ export default function App() {
         </p>
       </div>
 
+      <SearchBar onSearch={setSearchTerm} />
+      <SearchResults
+        results={results}
+        onAdd={handleAddFromSearch}
+        isLoading={isLoading}
+        error={error}
+      />
+      <hr className="my-6" />
+
       <SummaryBar movies={movies}/>
 
       <button className="btn btn-error btn-sm" onClick={handleClearAll}>
