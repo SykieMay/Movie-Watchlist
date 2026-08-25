@@ -1,4 +1,14 @@
 import React from 'react';
+  
+  const Tmdb = () =>  {
+	return (
+	  <div>
+	  </div>
+	);
+  }
+  
+  export default Tmdb;
+  import React from 'react';
 import axios from "axios";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;

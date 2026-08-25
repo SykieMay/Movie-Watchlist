@@ -129,6 +129,7 @@ export default function App() {
         </p>
       </div>
 
+      {/* NEW: TMDB search */}  
       <SearchBar onSearch={setSearchTerm} />
       <SearchResults
         results={results}
