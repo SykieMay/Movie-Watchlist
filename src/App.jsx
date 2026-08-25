@@ -128,8 +128,7 @@ export default function App() {
           A collection of movies I've watched and want to watch.
         </p>
       </div>
-
-      {/* NEW: TMDB search */}  
+ 
       <SearchBar onSearch={setSearchTerm} />
       <SearchResults
         results={results}
